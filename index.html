@@ -2,194 +2,158 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محاكي حلقات التكرار for - لغة بايثون</title>
+    <title>محاكي بايثون - المهندس الزراعي</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; text-align: center; color: #333; }
-        .container { max-width: 900px; margin: 0 auto; background: white; padding: 20px 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; font-size: 28px; margin-bottom: 20px; }
-        
-        /* تصميم التبويبات */
-        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
-        .tab-btn { background-color: #ecf0f1; border: 2px solid #bdc3c7; padding: 12px 25px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.3s; color: #7f8c8d; }
-        .tab-btn:hover { background-color: #dfe6e9; }
-        .tab-btn.active { background-color: #3498db; color: white; border-color: #2980b9; }
-        
-        .tab-content { display: none; animation: fadeIn 0.5s; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1e1e1e; color: #cccccc; margin: 0; padding: 20px; }
+        .ide-container { max-width: 1000px; margin: 0 auto; background: #252526; border: 1px solid #333333; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .ide-header { background: #333333; padding: 10px 20px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; color: #999999; }
+        .dots { display: flex; gap: 8px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot.red { background: #ff5f56; } .dot.yellow { background: #ffbd2e; } .dot.green { background: #27c93f; }
+
+        .tabs { background: #2d2d2d; display: flex; border-bottom: 1px solid #444; }
+        .tab-btn { background: none; border: none; color: #858585; padding: 12px 20px; font-size: 15px; cursor: pointer; border-bottom: 2px solid transparent; font-weight: bold;}
+        .tab-btn.active { color: #ffffff; border-bottom: 2px solid #27ae60; background: #1e1e1e; }
+        .tab-content { display: none; padding: 20px; }
         .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* تصميم الكود والمخرجات */
-        .code-display { background: #2d3436; color: #a29bfe; padding: 15px; border-radius: 8px; font-size: 22px; direction: ltr; text-align: left; margin: 20px 0; font-family: 'Courier New', Courier, monospace; font-weight: bold;}
-        .code-display span.keyword { color: #fdcb6e; }
-        .code-display span.string { color: #55efc4; }
-        
-        .controls { display: flex; justify-content: center; gap: 15px; margin: 20px 0; background: #e8f4f8; padding: 15px; border-radius: 10px; }
-        .input-group { display: flex; flex-direction: column; align-items: center; }
-        label { font-weight: bold; margin-bottom: 5px; color: #2d3436; }
-        input { width: 70px; padding: 8px; font-size: 16px; text-align: center; border: 2px solid #b2bec3; border-radius: 5px; }
-        
-        button.run-btn { background-color: #e74c3c; color: white; border: none; padding: 12px 35px; font-size: 18px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        button.run-btn:hover { background-color: #c0392b; transform: translateY(-2px); }
+        .workspace { display: flex; gap: 20px; }
+        .code-window { width: 60%; background: #1e1e1e; padding: 15px; font-family: 'Consolas', monospace; font-size: 20px; direction: ltr; text-align: left; line-height: 1.6; border: 1px solid #333; border-radius: 6px; }
+        .keyword { color: #569cd6; font-weight: bold; }
+        .function { color: #dcdcaa; }
+        .variable { color: #9cdcfe; }
+        .string { color: #ce9178; }
+        .number { color: #b5cea8; }
 
-        /* تصميم العناصر المرئية */
-        .visual-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 25px; min-height: 80px; }
-        .item-box { padding: 15px 25px; background: #ecf0f1; border: 2px solid #bdc3c7; border-radius: 10px; font-size: 22px; font-weight: bold; color: #2d3436; transition: 0.4s; }
-        .item-box.active { background: #ffeaa7; color: #d35400; border-color: #f1c40f; transform: scale(1.15); box-shadow: 0 0 15px rgba(241, 196, 15, 0.5); }
-        
-        .number-box { width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: #ecf0f1; border: 2px solid #bdc3c7; border-radius: 50%; font-size: 20px; font-weight: bold; color: #636e72; transition: 0.4s; }
-        .number-box.active { background: #00b894; color: white; border-color: #00cec9; transform: scale(1.2); box-shadow: 0 0 15px rgba(0, 184, 148, 0.6); }
+        .controls { width: 40%; background: #2d2d2d; padding: 15px; border-radius: 6px; border-right: 4px solid #27ae60; }
+        .controls h3 { margin-top: 0; color: #fff; font-size: 16px; border-bottom: 1px solid #444; padding-bottom: 10px; }
+        .input-group { margin-bottom: 10px; }
+        label { display: block; font-size: 13px; color: #ccc; margin-bottom: 4px; }
+        input { width: 100%; background: #3c3c3c; border: 1px solid #555; color: #fff; padding: 8px; border-radius: 4px; box-sizing: border-box; font-size: 16px; text-align: center;}
+        button { width: 100%; background: #27ae60; color: white; border: none; padding: 12px; font-size: 15px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 10px; transition: 0.2s;}
+        button:hover { background: #2ecc71; }
 
-        .result-panel { margin-top: 25px; padding: 20px; background: #f1f2f6; border-left: 5px solid #3498db; border-radius: 5px; font-size: 22px; color: #2f3640; text-align: right; min-height: 40px; }
+        .visual-area { margin-top: 20px; min-height: 60px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start; direction: ltr;}
+        .item-box { padding: 10px 15px; background: #2d2d2d; border: 1px solid #444; border-radius: 4px; font-family: monospace; font-size: 18px; color: #ccc; transition: 0.3s; }
+        .item-box.active { background: #27ae60; color: white; border-color: #2ecc71; transform: scale(1.1); box-shadow: 0 0 10px rgba(39, 174, 96, 0.6); }
+
+        .terminal-area { background: #1e1e1e; padding: 15px; font-family: 'Consolas', monospace; font-size: 16px; height: 130px; overflow-y: auto; direction: ltr; text-align: left; border-top: 1px solid #333; }
+        .prompt { color: #27c93f; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>محاكي التكرار في بايثون (Python For Loops)</h1>
-    
+<div class="ide-container">
+    <div class="ide-header">
+        <div class="dots"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+        <div>omani_palms.py - Python IDE</div>
+    </div>
+
     <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('listTab', this)">أولاً: حلقة for (المرور على قائمة)</button>
-        <button class="tab-btn" onclick="switchTab('rangeTab', this)">ثانياً: حلقة for مع (range)</button>
+        <button class="tab-btn active" onclick="switchTab('tab1', this)">1. حلقة for (أنواع النخيل)</button>
+        <button class="tab-btn" onclick="switchTab('tab2', this)">2. دالة range (مسافات الزراعة)</button>
     </div>
 
-    <div id="listTab" class="tab-content active">
-        <div class="code-display">
-            <span class="keyword">fruits</span> = [<span class="string">"🍎 تفاحة"</span>, <span class="string">"🍌 موزة"</span>, <span class="string">"🍇 عنب"</span>, <span class="string">"🍓 فراولة"</span>]<br>
-            <span class="keyword">for</span> item <span class="keyword">in</span> fruits:<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;print(item)
+    <div id="tab1" class="tab-content active">
+        <div class="workspace">
+            <div class="code-window">
+                <span class="variable">palm_types</span> = [<span class="string">"خلاص 🌴"</span>, <span class="string">"خنيزي 🌴"</span>, <span class="string">"فرض 🌴"</span>, <span class="string">"مجهول 🌴"</span>]<br>
+                <span class="keyword">for</span> <span class="variable">tree</span> <span class="keyword">in</span> <span class="variable">palm_types</span>:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="variable">tree</span>)
+            </div>
+            <div class="controls">
+                <h3>أصناف النخيل العمانية</h3>
+                <button onclick="runPalms()">▶ تشغيل البرنامج</button>
+            </div>
         </div>
-        <button class="run-btn" onclick="visualizeList()">شغّل الكود (Run)</button>
-        
-        <div class="visual-container" id="listContainer">
-            <div class="item-box" id="item-0">🍎 تفاحة</div>
-            <div class="item-box" id="item-1">🍌 موزة</div>
-            <div class="item-box" id="item-2">🍇 عنب</div>
-            <div class="item-box" id="item-3">🍓 فراولة</div>
-        </div>
-        
-        <div class="result-panel">
-            <strong>شاشة المخرجات: </strong> <span id="listOutput"></span>
+        <div class="visual-area" id="palmsVisual">
+            <div class="item-box" id="p-0">خلاص 🌴</div><div class="item-box" id="p-1">خنيزي 🌴</div>
+            <div class="item-box" id="p-2">فرض 🌴</div><div class="item-box" id="p-3">مجهول 🌴</div>
         </div>
     </div>
 
-    <div id="rangeTab" class="tab-content">
-        <div class="controls">
-            <div class="input-group">
-                <label>البداية (Start)</label>
-                <input type="number" id="startVal" value="1">
+    <div id="tab2" class="tab-content">
+        <div class="workspace">
+            <div class="code-window">
+                <span class="keyword">for</span> <span class="variable">meter</span> <span class="keyword">in</span> <span class="function">range</span>(<span class="number" id="c-start">0</span>, <span class="number" id="c-end">50</span>, <span class="number" id="c-step">5</span>):<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">print</span>(<span class="string">"نخلة عند المتر:"</span>, <span class="variable">meter</span>)
             </div>
-            <div class="input-group">
-                <label>النهاية (End)</label>
-                <input type="number" id="endVal" value="10">
-            </div>
-            <div class="input-group">
-                <label>القفزة (Step)</label>
-                <input type="number" id="stepVal" value="2">
+            <div class="controls">
+                <h3>مصحح مسافات الزراعة</h3>
+                <div class="input-group"><label>نقطة البداية (Start)</label><input type="number" id="startVal" value="0"></div>
+                <div class="input-group"><label>نقطة النهاية (End)</label><input type="number" id="endVal" value="50"></div>
+                <div class="input-group"><label>مسافة القفزة/الزراعة (Step)</label><input type="number" id="stepVal" value="5"></div>
+                <button onclick="runRange()">▶ توزيع الأشجار</button>
             </div>
         </div>
+        <div class="visual-area" id="rangeVisual"></div>
+    </div>
 
-        <div class="code-display" id="rangeCodeText">
-            <span class="keyword">for</span> i <span class="keyword">in</span> range(1, 10, 2):<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;print(i)
-        </div>
-        <button class="run-btn" onclick="visualizeRange()">شغّل الكود (Run)</button>
-        
-        <div class="visual-container" id="numberLine">
-            </div>
-        
-        <div class="result-panel">
-            <strong>شاشة المخرجات: </strong> <span id="rangeOutput"></span>
-        </div>
+    <div class="terminal-area" id="terminalOutput">
+        <span class="prompt">PS C:\Oman\Agriculture></span> <br>
     </div>
 </div>
 
 <script>
-    // نظام التبويبات
     function switchTab(tabId, btn) {
-        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
         btn.classList.add('active');
     }
 
-    // دالة محاكاة القوائم (التبويب الأول)
-    async function visualizeList() {
-        const items = ["🍎 تفاحة", "🍌 موزة", "🍇 عنب", "🍓 فراولة"];
-        document.getElementById('listOutput').innerText = "";
-        
-        // إعادة تعيين الألوان
-        for(let i=0; i<4; i++) { document.getElementById('item-'+i).classList.remove('active'); }
+    async function runPalms() {
+        const terminal = document.getElementById('terminalOutput');
+        terminal.innerHTML = '<span class="prompt">PS C:\\Oman\\Agriculture></span> python palms.py<br>';
+        const items = ["خلاص 🌴", "خنيزي 🌴", "فرض 🌴", "مجهول 🌴"];
+        for(let i=0; i<4; i++) document.getElementById('p-'+i).classList.remove('active');
+        for(let i=0; i<items.length; i++) {
+            document.getElementById('p-'+i).classList.add('active');
+            terminal.innerHTML += items[i] + "<br>";
+            terminal.scrollTop = terminal.scrollHeight;
+            await new Promise(r => setTimeout(r, 1000));
+            document.getElementById('p-'+i).classList.remove('active');
+        }
+        terminal.innerHTML += '<span class="prompt">PS C:\\Oman\\Agriculture></span> <br>';
+    }
 
-        let outputText = "";
-        for (let i = 0; i < items.length; i++) {
-            await new Promise(r => setTimeout(r, 800)); // تأخير ليرى الطالب الخطوة
-            document.getElementById('item-' + i).classList.add('active');
-            outputText += items[i] + "  |  ";
-            document.getElementById('listOutput').innerText = outputText;
+    function initRange() {
+        const c = document.getElementById('rangeVisual');
+        c.innerHTML = '';
+        for(let i=0; i<=50; i+=5) {
+            let d = document.createElement('div');
+            d.className = 'item-box'; d.id = 'r-'+i; d.innerText = i + 'm';
+            c.appendChild(d);
         }
     }
 
-    // دالة محاكاة Range (التبويب الثاني)
-    function initNumberLine() {
-        const container = document.getElementById('numberLine');
-        container.innerHTML = '';
-        for(let i = 0; i <= 15; i++) {
-            let div = document.createElement('div');
-            div.className = 'number-box';
-            div.id = 'num-' + i;
-            div.innerText = i;
-            container.appendChild(div);
-        }
-    }
-
-    async function visualizeRange() {
+    async function runRange() {
         const start = parseInt(document.getElementById('startVal').value);
         const end = parseInt(document.getElementById('endVal').value);
         const step = parseInt(document.getElementById('stepVal').value);
         
-        // تحديث النص البرمجي
-        let codeStr = `<span class="keyword">for</span> i <span class="keyword">in</span> range(${start}, ${end}`;
-        if(step !== 1) codeStr += `, ${step}`;
-        codeStr += `):<br>&nbsp;&nbsp;&nbsp;&nbsp;print(i)`;
-        document.getElementById('rangeCodeText').innerHTML = codeStr;
+        document.getElementById('c-start').innerText = start;
+        document.getElementById('c-end').innerText = end;
+        document.getElementById('c-step').innerText = step;
 
-        // إعادة تعيين الشاشة
-        document.querySelectorAll('.number-box').forEach(box => box.classList.remove('active'));
-        document.getElementById('rangeOutput').innerText = '';
+        const terminal = document.getElementById('terminalOutput');
+        terminal.innerHTML = '<span class="prompt">PS C:\\Oman\\Agriculture></span> python plant_trees.py<br>';
+        document.querySelectorAll('#rangeVisual .item-box').forEach(b => b.classList.remove('active'));
 
-        if(step === 0) { alert("قيمة القفزة لا يمكن أن تكون صفراً!"); return; }
-
-        let outputArray = [];
-        
-        if (step > 0) {
-            for(let i = start; i < end; i += step) {
-                if(i >= 0 && i <= 15) { await highlightNumber(i); }
-                outputArray.push(i);
-                document.getElementById('rangeOutput').innerText = outputArray.join(' ، ');
-            }
-        } else {
-             for(let i = start; i > end; i += step) {
-                if(i >= 0 && i <= 15) { await highlightNumber(i); }
-                outputArray.push(i);
-                document.getElementById('rangeOutput').innerText = outputArray.join(' ، ');
+        if(step > 0) {
+            for(let i=start; i<end; i+=step) {
+                if(i>=0 && i<=50 && i%5===0) {
+                    const box = document.getElementById('r-'+i);
+                    if(box) box.classList.add('active');
+                }
+                terminal.innerHTML += "زراعة نخلة 🌴 عند المتر: " + i + "<br>";
+                terminal.scrollTop = terminal.scrollHeight;
+                await new Promise(r => setTimeout(r, 800));
             }
         }
+        terminal.innerHTML += '<span class="prompt">PS C:\\Oman\\Agriculture></span> <br>';
     }
-
-    function highlightNumber(index) {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                const box = document.getElementById('num-' + index);
-                if(box) box.classList.add('active');
-                resolve();
-            }, 600);
-        });
-    }
-
-    // تهيئة الأرقام عند التحميل
-    window.onload = initNumberLine;
+    window.onload = initRange;
 </script>
-
 </body>
 </html>
