@@ -10,6 +10,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* تنسيق العنوان الرئيسي في المنتصف */
+.main-center-title {
+    text-align: center;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--primary-red);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.main-center-title span {
+    border-bottom: 4px solid var(--primary-gold);
+    padding-bottom: 5px;
+}
         :root {
             --primary-red: #8B151C; /* أحمر عنابي راقي */
             --secondary-red: #A91D26;
@@ -165,10 +178,25 @@
             font-weight: 700;
         }
 
-        .notes-list li i {
-            color: var(--primary-red);
-            font-size: 1.5rem;
-        }
+        .notes-list li {
+    font-size: 1.7rem; /* تم تكبير الخط بشكل ملحوظ */
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff;
+    padding: 1rem 1.2rem; /* زيادة المسافة الداخلية قليلاً */
+    border-radius: 15px;
+    border-right: 6px solid var(--primary-gold);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    color: var(--text-dark);
+    font-weight: 800; /* جعل الخط أكثر سماكة */
+}
+
+/* لتكبير أيقونات الملاحظات أيضاً لتتناسب مع حجم الخط الجديد */
+.notes-list li i {
+    color: var(--primary-red);
+    font-size: 1.8rem; /* تم تكبير الأيقونة */
+}
 
         /* قسم إشراقة الصباح */
         .quote-section {
@@ -474,27 +502,31 @@
         }
 /* تنسيق الباركود */
 /* تنسيق الباركود المحدث (حجم كبير وواضح) */
+/* تنسيق الباركود المحدث (أسفل البطاقات) */
 .qr-section { 
     display: flex; 
-    flex-direction: column; /* ترتيب النص فوق الصورة */
+    flex-direction: row; /* جعل النص بجانب الصورة وليس فوقها */
+    justify-content: center;
     align-items: center; 
-    gap: 15px; 
-    padding: 1.5rem;
-    text-align: center;
+    gap: 30px; 
+    padding: 1rem;
+    text-align: right;
+    margin-top: auto; /* لدفعه للأسفل بشكل متناسق */
 }
 .qr-section p { 
-    font-weight: 800; 
-    font-size: 1.4rem; /* تكبير خط النص */
+    font-weight: 900; 
+    font-size: 1.8rem; /* تكبير خط النص بجانب الباركود */
     color: var(--primary-red); 
-    line-height: 1.4; 
+    line-height: 1.5; 
 }
 .qr-section p i {
     color: var(--primary-gold);
     margin-left: 8px;
+    font-size: 2rem;
 }
 .qr-section img { 
-    width: 180px;  /* تكبير حجم الباركود بشكل كبير جداً */
-    height: 180px; 
+    width: 140px;  /* حجم مناسب للمسح عن بعد */
+    height: 140px; 
     border: 3px solid var(--primary-gold); 
     border-radius: 15px; 
     padding: 5px; 
@@ -550,14 +582,12 @@
                 <p id="morningQuote" class="quote-text">جاري تحميل حكمة اليوم...</p>
             </div>
             <!-- قسم الباركود الجديد في العمود الجانبي -->
-<div class="qr-section glass-panel">
-    <p><i class="fa-solid fa-qrcode"></i> امسح الكود بهاتفك<br>لعرض صورة الجدول</p>
-    <img id="qrCode" src="" alt="QR Code">
-</div>
+
         </div>
 
         <!-- العمود الأيسر (العداد + العرض) -->
         <div class="right-column">
+            <h2 class="main-center-title"><span>جدول الإذاعة المدرسية</span></h2>
             <!-- العداد التنازلي -->
             <div id="countdownPanel" class="countdown-panel glass-panel">
                 <h3 id="countdownTitle" style="color: var(--text-gray); font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem;">
@@ -589,6 +619,10 @@
                     </div>
                 </div>
             </div>
+            <div class="qr-section glass-panel">
+    <p><i class="fa-solid fa-qrcode"></i> امسح الكود بهاتفك<br>لعرض صورة الجدول</p>
+    <img id="qrCode" src="" alt="QR Code">
+</div>
         </div>
     </main>
 
