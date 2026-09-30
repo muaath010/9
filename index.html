@@ -92,6 +92,43 @@
             align-items: center;
         }
 
+        /* تنسيقات حقوق الإعداد في الهيدر */
+.header-credits {
+    display: flex;
+    gap: 15px;
+    margin-top: 8px;
+    font-size: 1.2rem;
+    color: #FFFFFF;
+    font-weight: 700;
+    align-items: center;
+}
+.header-credits span i {
+    color: var(--primary-gold);
+    margin-left: 5px;
+}
+.header-credits .separator {
+    color: var(--primary-gold);
+    font-weight: 900;
+}
+
+/* تنسيق زر الجدول بعد نقله للهيدر ليكون شفافاً وأنيقاً */
+.header-widgets .btn-schedule {
+    padding: 8px 20px;
+    font-size: 1.3rem;
+    border: 1px solid var(--primary-gold);
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+    color: #fff;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.header-widgets .btn-schedule:hover {
+    background: var(--primary-gold);
+    color: var(--primary-red);
+    transform: scale(1.05);
+}
+
         .info-container {
             background: rgba(255,255,255,0.1);
             padding: 8px 25px;
@@ -538,13 +575,24 @@
 </head>
 <body>
 
-    <header>
+   <header>
         <div class="school-info">
             <h1>مدرسة محمد بن سليمان الغافري</h1>
-            <p>المنصة الرقمية للجدول الإذاعي</p>
+            <div class="header-credits">
+                <span>المنصة الرقمية للجدول الإذاعي</span>
+                <span class="separator">|</span>
+                <span><i class="fa-solid fa-user-tie"></i> إشراف: أ. أحمد الشملي</span>
+                <span class="separator">|</span>
+                <span><i class="fa-solid fa-laptop-code"></i> تنفيذ: أ. معاذ اليعقوبي</span>
+            </div>
         </div>
         
         <div class="header-widgets">
+            <!-- نقلنا زر الجدول المفصل هنا -->
+            <button class="btn-schedule" onclick="openModal()">
+                <i class="fa-regular fa-calendar-days"></i> الجدول المفصل
+            </button>
+            
             <!-- الطقس المباشر -->
             <div class="info-container">
                 <i class="fa-solid fa-cloud-sun"></i>
@@ -635,22 +683,7 @@
         </div>
     </div>
 
-    <footer>
-        <div class="credits">
-            <span><i class="fa-solid fa-user-tie"></i> مشرف الإذاعة: أ. أحمد الشملي</span>
-            <span><i class="fa-solid fa-laptop-code"></i> إعداد وتنفيذ: أ. معاذ اليعقوبي</span>
-        </div>
-        <div class="footer-actions">
-            <button class="btn-schedule" onclick="openModal()">
-                <i class="fa-regular fa-calendar-days"></i> عرض الجدول المفصل
-            </button>
-        </div>
-
-        <!-- الباركود الذي سيعرض الصورة -->
-
-        
-    </footer>
-
+  
     <!-- نافذة الجدول المفصل -->
     <div class="modal" id="scheduleModal">
         <div class="modal-content">
