@@ -15,10 +15,11 @@
             --secondary-red: #A91D26;
             --primary-gold: #D4AF37; /* ذهبي ملكي */
             --light-gold: #F3E5AB;
-            --bg-dark: #121212;
-            --text-light: #ffffff;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(212, 175, 55, 0.3);
+            --bg-light: #F8F9FA; /* أبيض مائل للرمادي الفاتح جدا لراحة العين */
+            --text-dark: #222222;
+            --text-gray: #555555;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --glass-border: rgba(212, 175, 55, 0.4);
         }
 
         * {
@@ -29,22 +30,20 @@
         }
 
         body {
-            background: radial-gradient(circle at top right, #3A090D, #120203);
-            color: var(--text-light);
+            background: var(--bg-light); /* تغيير الخلفية للأبيض */
+            color: var(--text-dark);
             height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* لمنع التمرير في الشاشات الكبيرة */
+            overflow: hidden;
         }
 
-        /* التصميم الزجاجي الموحد */
+        /* التصميم الموحد للصناديق */
         .glass-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
             border-radius: 30px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.05);
         }
 
         /* --- الهيدر --- */
@@ -53,26 +52,28 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem 3rem;
-            background: linear-gradient(90deg, rgba(139,21,28,0.9) 0%, rgba(58,9,13,0.9) 100%);
-            border-bottom: 3px solid var(--primary-gold);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: linear-gradient(90deg, rgba(139,21,28,1) 0%, rgba(80,10,15,1) 100%);
+            border-bottom: 4px solid var(--primary-gold);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
         }
 
         .school-info h1 {
             font-size: 2.5rem;
             color: var(--primary-gold);
             font-weight: 900;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         .school-info p {
             font-size: 1.2rem;
-            letter-spacing: 2px;
-            color: var(--light-gold);
+            letter-spacing: 1px;
+            color: #FFFFFF;
         }
 
         .clock-container {
-            text-align: left;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 30px;
+            border-radius: 20px;
+            border: 1px solid var(--primary-gold);
         }
 
         .clock-container h2 {
@@ -99,7 +100,7 @@
         }
 
         .section-title {
-            color: var(--primary-gold);
+            color: var(--primary-red);
             font-size: 2rem;
             font-weight: 800;
             margin-bottom: 1.5rem;
@@ -122,20 +123,23 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            background: rgba(0,0,0,0.2);
+            background: #ffffff;
             padding: 1rem 1.5rem;
             border-radius: 20px;
-            border-right: 5px solid var(--primary-gold);
+            border-right: 6px solid var(--primary-gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
             transition: transform 0.3s ease;
+            color: var(--text-dark);
+            font-weight: 600;
         }
 
         .notes-list li:hover {
             transform: translateX(-10px);
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(212, 175, 55, 0.05);
         }
 
         .notes-list li i {
-            color: var(--primary-gold);
+            color: var(--primary-red);
             font-size: 1.8rem;
         }
 
@@ -154,23 +158,41 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         .today-card {
+            background: linear-gradient(135deg, var(--primary-red) 0%, #500a0f 100%);
             border: 2px solid var(--primary-gold);
-            background: linear-gradient(135deg, rgba(139,21,28,0.4) 0%, rgba(0,0,0,0) 100%);
+            color: #fff;
+        }
+
+        .tomorrow-card {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, #b89326 100%);
+            border: 2px solid var(--primary-red);
+            color: var(--bg-dark);
         }
 
         .card-badge {
             position: absolute;
             top: 20px;
             right: 20px;
-            background: var(--primary-gold);
-            color: var(--bg-dark);
             padding: 0.5rem 1.5rem;
             border-radius: 15px;
             font-weight: 800;
             font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .today-card .card-badge {
+            background: var(--primary-gold);
+            color: var(--primary-red);
+        }
+
+        .tomorrow-card .card-badge {
+            background: var(--primary-red);
+            color: #fff;
         }
 
         .card-content {
@@ -180,49 +202,66 @@
 
         .card-content .date {
             font-size: 1.8rem;
-            color: var(--light-gold);
+            font-weight: 600;
             margin-bottom: 1rem;
         }
+
+        .today-card .date { color: var(--light-gold); }
+        .tomorrow-card .date { color: #fff; }
 
         .card-content .class-name {
             font-size: 4rem;
             font-weight: 900;
-            color: #fff;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
             margin-bottom: 1rem;
         }
 
+        .today-card .class-name { color: #fff; }
+        .tomorrow-card .class-name { color: var(--primary-red); }
+
         .card-content .supervisor {
             font-size: 1.8rem;
-            color: var(--primary-gold);
-            background: rgba(0,0,0,0.3);
+            font-weight: 800;
             display: inline-block;
-            padding: 0.5rem 2rem;
+            padding: 0.5rem 2.5rem;
             border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .today-card .supervisor {
+            color: var(--primary-red);
+            background: #fff;
+        }
+
+        .tomorrow-card .supervisor {
+            color: #fff;
+            background: var(--primary-red);
         }
 
         /* --- الفوتر --- */
         footer {
-            background: #0A0203;
+            background: #ffffff;
             padding: 1rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 2px solid var(--primary-gold);
+            border-top: 3px solid var(--primary-gold);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
         }
 
         .credits {
             display: flex;
             gap: 3rem;
             font-size: 1.3rem;
-            font-weight: 600;
+            font-weight: 800;
+            color: var(--primary-red);
         }
         
         .credits span i { color: var(--primary-gold); margin-left: 8px; }
 
         .btn-schedule {
-            background: var(--primary-gold);
-            color: var(--bg-dark);
+            background: var(--primary-red);
+            color: #fff;
             border: none;
             padding: 0.8rem 2rem;
             font-size: 1.2rem;
@@ -233,11 +272,13 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            box-shadow: 0 4px 15px rgba(139,21,28,0.3);
         }
 
         .btn-schedule:hover {
-            background: #FFF;
-            transform: scale(1.05);
+            background: var(--primary-gold);
+            color: var(--primary-red);
+            transform: translateY(-3px);
         }
 
         /* --- نافذة الجدول الكامل (Modal) --- */
@@ -245,9 +286,9 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.8);
             z-index: 1000;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
             padding: 2rem;
             align-items: center;
             justify-content: center;
@@ -256,13 +297,14 @@
         .modal-content {
             width: 90%;
             max-height: 90vh;
-            background: var(--bg-dark);
-            border: 2px solid var(--primary-gold);
+            background: #ffffff;
+            border: 4px solid var(--primary-gold);
             border-radius: 30px;
             padding: 2rem;
             position: relative;
             display: flex;
             flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         .close-btn {
@@ -271,16 +313,23 @@
             background: var(--primary-red);
             color: white;
             border: none;
-            width: 40px; height: 40px;
+            width: 45px; height: 45px;
             border-radius: 50%;
             font-size: 1.5rem;
             cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-btn:hover {
+            background: var(--primary-gold);
+            color: var(--primary-red);
         }
 
         .table-container {
             overflow-y: auto;
             margin-top: 1rem;
             border-radius: 15px;
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         table {
@@ -291,22 +340,30 @@
 
         th {
             background: var(--primary-red);
-            color: var(--primary-gold);
+            color: #fff;
             padding: 1.5rem;
             font-size: 1.3rem;
             position: sticky;
             top: 0;
-            border-bottom: 2px solid var(--primary-gold);
+            border-bottom: 3px solid var(--primary-gold);
+            z-index: 10;
         }
 
         td {
             padding: 1rem;
             font-size: 1.2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            color: var(--text-dark);
         }
 
-        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
-        tr:hover { background: rgba(212,175,55,0.1); }
+        tr:nth-child(even) { background: #f9f9f9; }
+        tr:hover { background: rgba(212,175,55,0.15); }
+
+        .td-class {
+            color: var(--primary-red);
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
 
     </style>
 </head>
@@ -317,7 +374,7 @@
             <h1>مدرسة محمد بن سليمان الغافري</h1>
             <p>المنصة الرقمية للجدول الإذاعي</p>
         </div>
-        <div class="clock-container glass-panel" style="padding: 10px 30px;">
+        <div class="clock-container">
             <h2 id="liveClock">00:00:00</h2>
         </div>
     </header>
@@ -339,7 +396,7 @@
         <!-- شاشات العرض اليوم وغداً -->
         <div class="display-section">
             
-            <div class="card glass-panel today-card">
+            <div class="card today-card">
                 <div class="card-badge">إذاعة اليوم</div>
                 <div class="card-content">
                     <div class="date" id="todayDate">جاري التحميل...</div>
@@ -348,8 +405,8 @@
                 </div>
             </div>
 
-            <div class="card glass-panel">
-                <div class="card-badge" style="background: #FFF; color: var(--primary-red);">إذاعة الغد</div>
+            <div class="card tomorrow-card">
+                <div class="card-badge">إذاعة الغد</div>
                 <div class="card-content">
                     <div class="date" id="tomorrowDate">جاري التحميل...</div>
                     <div class="class-name" id="tomorrowClass">جاري التحميل...</div>
@@ -362,8 +419,8 @@
 
     <footer>
         <div class="credits">
-            <span><i class="fa-solid fa-user-tie"></i> مشرف الإذاعة المدرسية: أ. أحمد الشملي</span>
-            <span><i class="fa-solid fa-laptop-code"></i> إعداد وتنفيذ المنصة: أ. معاذ اليعقوبي</span>
+            <span><i class="fa-solid fa-user-tie"></i> مشرف الإذاعة: أ. أحمد الشملي</span>
+            <span><i class="fa-solid fa-laptop-code"></i> إعداد وتنفيذ: أ. معاذ اليعقوبي</span>
         </div>
         <button class="btn-schedule" onclick="openModal()">
             <i class="fa-regular fa-calendar-days"></i> عرض الجدول المفصل
@@ -374,7 +431,7 @@
     <div class="modal" id="scheduleModal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-            <h2 class="section-title">الجدول الإذاعي المفصل للعام الدراسي</h2>
+            <h2 class="section-title">الجدول الإذاعي المفصل (أكتوبر - ديسمبر)</h2>
             <div class="table-container">
                 <table id="fullScheduleTable">
                     <thead>
@@ -394,8 +451,7 @@
     </div>
 
     <script>
-        // قاعدة بيانات الجدول الإذاعي (عينة من الصورة لشهر أكتوبر ونوفمبر وديسمبر)
-        // يمكنك إضافة بقية التواريخ بنفس النمط
+        // إدراج الجدول بالكامل للأشهر (أكتوبر - نوفمبر - ديسمبر) حسب الصورة المرفقة
         const scheduleData = [
             // شهر أكتوبر
             { date: '2026-10-04', dayAr: 'الأحد', dateAr: '4 أكتوبر 2026', class: 'الخامس (1)', note: 'الإذاعة المدرسية' },
@@ -413,12 +469,41 @@
             { date: '2026-10-20', dayAr: 'الثلاثاء', dateAr: '20 أكتوبر 2026', class: 'السادس (4)', note: 'الإذاعة المدرسية' },
             { date: '2026-10-21', dayAr: 'الأربعاء', dateAr: '21 أكتوبر 2026', class: 'القرآن الكريم', note: 'أ. وليد الغافري' },
             { date: '2026-10-22', dayAr: 'الخميس', dateAr: '22 أكتوبر 2026', class: 'الإدارة المدرسية', note: '-' },
-            // شهر نوفمبر (عينة)
+            { date: '2026-10-25', dayAr: 'الأحد', dateAr: '25 أكتوبر 2026', class: 'السادس (5)', note: 'الإذاعة المدرسية' },
+            { date: '2026-10-26', dayAr: 'الاثنين', dateAr: '26 أكتوبر 2026', class: 'السابع (1)', note: 'الإذاعة المدرسية' },
+            { date: '2026-10-27', dayAr: 'الثلاثاء', dateAr: '27 أكتوبر 2026', class: 'السابع (2)', note: 'الإذاعة المدرسية' },
+            { date: '2026-10-28', dayAr: 'الأربعاء', dateAr: '28 أكتوبر 2026', class: 'القرآن الكريم', note: 'أ. وليد الغافري' },
+            { date: '2026-10-29', dayAr: 'الخميس', dateAr: '29 أكتوبر 2026', class: 'الإدارة المدرسية', note: '-' },
+            
+            // شهر نوفمبر
             { date: '2026-11-01', dayAr: 'الأحد', dateAr: '1 نوفمبر 2026', class: 'السابع (3)', note: 'الإذاعة المدرسية' },
             { date: '2026-11-02', dayAr: 'الاثنين', dateAr: '2 نوفمبر 2026', class: 'السابع (4)', note: 'الإذاعة المدرسية' },
             { date: '2026-11-03', dayAr: 'الثلاثاء', dateAr: '3 نوفمبر 2026', class: 'السابع (5)', note: 'الإذاعة المدرسية' },
             { date: '2026-11-04', dayAr: 'الأربعاء', dateAr: '4 نوفمبر 2026', class: 'القرآن الكريم', note: 'أ. وليد الغافري' },
-            { date: '2026-11-05', dayAr: 'الخميس', dateAr: '5 نوفمبر 2026', class: 'الإدارة المدرسية', note: '-' }
+            { date: '2026-11-05', dayAr: 'الخميس', dateAr: '5 نوفمبر 2026', class: 'الإدارة المدرسية', note: '-' },
+            { date: '2026-11-08', dayAr: 'الأحد', dateAr: '8 نوفمبر 2026', class: 'الثامن (1)', note: 'الإذاعة المدرسية' },
+            { date: '2026-11-09', dayAr: 'الاثنين', dateAr: '9 نوفمبر 2026', class: 'الثامن (2)', note: 'الإذاعة المدرسية' },
+            { date: '2026-11-10', dayAr: 'الثلاثاء', dateAr: '10 نوفمبر 2026', class: 'الثامن (3)', note: 'الإذاعة المدرسية' },
+            { date: '2026-11-11', dayAr: 'الأربعاء', dateAr: '11 نوفمبر 2026', class: 'القرآن الكريم', note: 'أ. وليد الغافري' },
+            { date: '2026-11-12', dayAr: 'الخميس', dateAr: '12 نوفمبر 2026', class: 'الإدارة المدرسية', note: '-' },
+            { date: '2026-11-15', dayAr: 'الأحد', dateAr: '15 نوفمبر 2026', class: 'الثامن (4)', note: 'الإذاعة المدرسية' },
+            { date: '2026-11-16', dayAr: 'الاثنين', dateAr: '16 نوفمبر 2026', class: 'الثامن (5)', note: 'الإذاعة المدرسية' },
+            { date: '2026-11-17', dayAr: 'الثلاثاء', dateAr: '17 نوفمبر 2026', class: 'التاسع (1)', note: 'الإذاعة المدرسية' },
+            { date: '2026-11-18', dayAr: 'الأربعاء', dateAr: '18 نوفمبر 2026', class: 'القرآن الكريم', note: 'أ. وليد الغافري' },
+            { date: '2026-11-19', dayAr: 'الخميس', dateAr: '19 نوفمبر 2026', class: 'الإدارة المدرسية', note: '-' },
+            { date: '2026-11-22', dayAr: 'الأحد', dateAr: '22 نوفمبر 2026', class: 'التاسع (2)', note: 'الإذاعة المدرسية' },
+            { date: '2026-11-23', dayAr: 'الاثنين', dateAr: '23 نوفمبر 2026', class: 'التاسع (3)', note: 'الإذاعة المدرسية' },
+            { date: '2026-11-24', dayAr: 'الثلاثاء', dateAr: '24 نوفمبر 2026', class: 'التاسع (4)', note: 'الإذاعة المدرسية' },
+            { date: '2026-11-25', dayAr: 'الأربعاء', dateAr: '25 نوفمبر 2026', class: 'القرآن الكريم', note: 'أ. وليد الغافري' },
+            { date: '2026-11-26', dayAr: 'الخميس', dateAr: '26 نوفمبر 2026', class: 'الإدارة المدرسية', note: '-' },
+            { date: '2026-11-29', dayAr: 'الأحد', dateAr: '29 نوفمبر 2026', class: 'العاشر (1)', note: 'الإذاعة المدرسية' },
+            { date: '2026-11-30', dayAr: 'الاثنين', dateAr: '30 نوفمبر 2026', class: 'العاشر (2)', note: 'الإذاعة المدرسية' },
+
+            // شهر ديسمبر
+            { date: '2026-12-01', dayAr: 'الثلاثاء', dateAr: '1 ديسمبر 2026', class: 'العاشر (3)', note: 'الإذاعة المدرسية' },
+            { date: '2026-12-02', dayAr: 'الأربعاء', dateAr: '2 ديسمبر 2026', class: 'القرآن الكريم', note: 'أ. وليد الغافري' },
+            { date: '2026-12-03', dayAr: 'الخميس', dateAr: '3 ديسمبر 2026', class: 'الإدارة المدرسية', note: '-' },
+            { date: '2026-12-06', dayAr: 'الأحد', dateAr: '6 ديسمبر 2026', class: 'العاشر (4)', note: 'الإذاعة المدرسية' }
         ];
 
         // تحديث الساعة المباشرة
@@ -430,14 +515,10 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // دالة لمعرفة إذاعة اليوم وإذاعة الغد بناءً على تاريخ الجهاز
+        // دالة عرض إذاعة اليوم والغد
         function displayTodayTomorrow() {
-            // استخدام تاريخ اليوم الفعلي 
             const today = new Date();
-            // لغرض التجربة والعرض التوضيحي، إذا كان تاريخ اليوم قبل بدء الجدول، سنجبره على عرض أقرب يوم (4 أكتوبر)
-            // لحذف التجربة، اجعل الشرط يقرأ تاريخ اليوم مباشرة.
-            
-            today.setHours(0,0,0,0); // تصفير الوقت
+            today.setHours(0,0,0,0);
 
             let todayIndex = -1;
             let tomorrowIndex = -1;
@@ -449,23 +530,21 @@
                     todayIndex = i;
                     break;
                 } else if (entryDate.getTime() > today.getTime() && todayIndex === -1) {
-                    // إذا لم نجد إذاعة لليوم (مثلا إجازة)، نجلب أول إذاعة قادمة
+                    // إذا لم نجد إذاعة لليوم (الجدول في المستقبل)، نعرض أقرب إذاعة قادمة
                     todayIndex = i;
                     break;
                 }
             }
 
-            // إذا انتهى الجدول
             if(todayIndex === -1 && scheduleData.length > 0) {
                 todayIndex = scheduleData.length - 1; 
             }
 
-            // الغد هو الإدخال الذي يليه في المصفوفة (حتى لا نعرض أيام الإجازات)
             if(todayIndex !== -1 && todayIndex + 1 < scheduleData.length) {
                 tomorrowIndex = todayIndex + 1;
             }
 
-            // عرض البيانات في الشاشة
+            // عرض البيانات
             if(todayIndex !== -1) {
                 let tData = scheduleData[todayIndex];
                 document.getElementById('todayDate').textContent = `${tData.dayAr}، ${tData.dateAr}`;
@@ -494,8 +573,8 @@
                 tr.innerHTML = `
                     <td><strong>${item.dayAr}</strong></td>
                     <td>${item.dateAr}</td>
-                    <td style="color: var(--primary-gold); font-weight:bold; font-size:1.4rem;">${item.class}</td>
-                    <td>${item.note}</td>
+                    <td class="td-class">${item.class}</td>
+                    <td>${item.note !== '-' ? item.note : 'إشراف الإدارة'}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -510,12 +589,11 @@
             document.getElementById('scheduleModal').style.display = 'none';
         }
 
-        // استدعاء الدوال عند بدء التشغيل
+        // استدعاء الدوال عند تحميل الصفحة
         window.onload = () => {
             displayTodayTomorrow();
             populateTable();
         };
-
     </script>
 </body>
 </html>
