@@ -2,128 +2,520 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>محاكي دالة range() - لغة بايثون</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الجدول الإذاعي - مدرسة محمد بن سليمان الغافري</title>
+    <!-- استدعاء خطوط جوجل العصرية -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <!-- استدعاء مكتبة الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f8; margin: 0; padding: 20px; text-align: center; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
-        .controls { display: flex; justify-content: center; gap: 20px; margin: 20px 0; background: #e8f4f8; padding: 20px; border-radius: 10px; }
-        .input-group { display: flex; flex-direction: column; align-items: center; }
-        label { font-weight: bold; margin-bottom: 5px; color: #34495e; }
-        input { width: 80px; padding: 10px; font-size: 18px; text-align: center; border: 2px solid #bdc3c7; border-radius: 5px; }
-        button { background-color: #e74c3c; color: white; border: none; padding: 10px 30px; font-size: 18px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        button:hover { background-color: #c0392b; transform: scale(1.05); }
-        .code-display { background: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 8px; font-size: 24px; direction: ltr; text-align: left; margin: 20px 0; font-family: 'Courier New', Courier, monospace; }
-        .number-line { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 30px; }
-        .number-box { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; background: #ecf0f1; border: 2px solid #bdc3c7; border-radius: 50%; font-size: 20px; font-weight: bold; color: #7f8c8d; transition: 0.4s; }
-        .number-box.active { background: #f1c40f; color: #fff; border-color: #f39c12; transform: scale(1.2); box-shadow: 0 0 15px rgba(241, 196, 15, 0.6); }
-        .result-panel { margin-top: 30px; padding: 20px; background: #dff9fb; border-radius: 10px; font-size: 20px; color: #130f40; min-height: 50px;}
+        :root {
+            --primary-red: #8B151C; /* أحمر عنابي راقي */
+            --secondary-red: #A91D26;
+            --primary-gold: #D4AF37; /* ذهبي ملكي */
+            --light-gold: #F3E5AB;
+            --bg-dark: #121212;
+            --text-light: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(212, 175, 55, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #3A090D, #120203);
+            color: var(--text-light);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* لمنع التمرير في الشاشات الكبيرة */
+        }
+
+        /* التصميم الزجاجي الموحد */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* --- الهيدر --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            background: linear-gradient(90deg, rgba(139,21,28,0.9) 0%, rgba(58,9,13,0.9) 100%);
+            border-bottom: 3px solid var(--primary-gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .school-info h1 {
+            font-size: 2.5rem;
+            color: var(--primary-gold);
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .school-info p {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: var(--light-gold);
+        }
+
+        .clock-container {
+            text-align: left;
+        }
+
+        .clock-container h2 {
+            font-size: 2.5rem;
+            color: #fff;
+            direction: ltr;
+        }
+
+        /* --- المحتوى الرئيسي --- */
+        main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            padding: 2rem 3rem;
+            height: calc(100vh - 200px);
+        }
+
+        /* قسم الملاحظات */
+        .notes-section {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-title {
+            color: var(--primary-gold);
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border-bottom: 2px dashed var(--glass-border);
+            padding-bottom: 1rem;
+        }
+
+        .notes-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .notes-list li {
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0,0,0,0.2);
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            border-right: 5px solid var(--primary-gold);
+            transition: transform 0.3s ease;
+        }
+
+        .notes-list li:hover {
+            transform: translateX(-10px);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .notes-list li i {
+            color: var(--primary-gold);
+            font-size: 1.8rem;
+        }
+
+        /* قسم العرض (اليوم وغداً) */
+        .display-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .card {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .today-card {
+            border: 2px solid var(--primary-gold);
+            background: linear-gradient(135deg, rgba(139,21,28,0.4) 0%, rgba(0,0,0,0) 100%);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-gold);
+            color: var(--bg-dark);
+            padding: 0.5rem 1.5rem;
+            border-radius: 15px;
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+
+        .card-content {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .card-content .date {
+            font-size: 1.8rem;
+            color: var(--light-gold);
+            margin-bottom: 1rem;
+        }
+
+        .card-content .class-name {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            margin-bottom: 1rem;
+        }
+
+        .card-content .supervisor {
+            font-size: 1.8rem;
+            color: var(--primary-gold);
+            background: rgba(0,0,0,0.3);
+            display: inline-block;
+            padding: 0.5rem 2rem;
+            border-radius: 50px;
+        }
+
+        /* --- الفوتر --- */
+        footer {
+            background: #0A0203;
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px solid var(--primary-gold);
+        }
+
+        .credits {
+            display: flex;
+            gap: 3rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .credits span i { color: var(--primary-gold); margin-left: 8px; }
+
+        .btn-schedule {
+            background: var(--primary-gold);
+            color: var(--bg-dark);
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 800;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-schedule:hover {
+            background: #FFF;
+            transform: scale(1.05);
+        }
+
+        /* --- نافذة الجدول الكامل (Modal) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            width: 90%;
+            max-height: 90vh;
+            background: var(--bg-dark);
+            border: 2px solid var(--primary-gold);
+            border-radius: 30px;
+            padding: 2rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px; left: 20px;
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .table-container {
+            overflow-y: auto;
+            margin-top: 1rem;
+            border-radius: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        th {
+            background: var(--primary-red);
+            color: var(--primary-gold);
+            padding: 1.5rem;
+            font-size: 1.3rem;
+            position: sticky;
+            top: 0;
+            border-bottom: 2px solid var(--primary-gold);
+        }
+
+        td {
+            padding: 1rem;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+        tr:hover { background: rgba(212,175,55,0.1); }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>محاكي حلقة التكرار (for) ودالة النطاق (range)</h1>
-    
-    <div class="controls">
-        <div class="input-group">
-            <label>البداية (Start)</label>
-            <input type="number" id="startVal" value="0">
+    <header>
+        <div class="school-info">
+            <h1>مدرسة محمد بن سليمان الغافري</h1>
+            <p>المنصة الرقمية للجدول الإذاعي</p>
         </div>
-        <div class="input-group">
-            <label>النهاية (End)</label>
-            <input type="number" id="endVal" value="10">
+        <div class="clock-container glass-panel" style="padding: 10px 30px;">
+            <h2 id="liveClock">00:00:00</h2>
         </div>
-        <div class="input-group">
-            <label>القفزة (Step)</label>
-            <input type="number" id="stepVal" value="1">
+    </header>
+
+    <main>
+        <!-- قائمة الملاحظات -->
+        <div class="notes-section glass-panel">
+            <h2 class="section-title"><i class="fa-solid fa-clipboard-list"></i> ملاحظات للطلبة</h2>
+            <ul class="notes-list">
+                <li><i class="fa-regular fa-clock"></i> الالتزام بالوقت المحدد للإذاعة (10 دقائق).</li>
+                <li><i class="fa-solid fa-book-open-reader"></i> التحضير المسبق والمراجعة والتأكد من صحة المحتوى.</li>
+                <li><i class="fa-solid fa-users-rays"></i> المشاركة الإيجابية لجميع الطلبة وإبراز مواهبهم.</li>
+                <li><i class="fa-solid fa-kaaba"></i> الالتزام بالآداب والقيم الإسلامية والهوية العمانية.</li>
+                <li><i class="fa-solid fa-people-group"></i> التعاون والعمل الجماعي بين أعضاء الصف.</li>
+                <li><i class="fa-solid fa-list-check"></i> تنسيق فقرات الإذاعة وفق خطة واضحة ومسبقة.</li>
+            </ul>
+        </div>
+
+        <!-- شاشات العرض اليوم وغداً -->
+        <div class="display-section">
+            
+            <div class="card glass-panel today-card">
+                <div class="card-badge">إذاعة اليوم</div>
+                <div class="card-content">
+                    <div class="date" id="todayDate">جاري التحميل...</div>
+                    <div class="class-name" id="todayClass">جاري التحميل...</div>
+                    <div class="supervisor" id="todayNote">...</div>
+                </div>
+            </div>
+
+            <div class="card glass-panel">
+                <div class="card-badge" style="background: #FFF; color: var(--primary-red);">إذاعة الغد</div>
+                <div class="card-content">
+                    <div class="date" id="tomorrowDate">جاري التحميل...</div>
+                    <div class="class-name" id="tomorrowClass">جاري التحميل...</div>
+                    <div class="supervisor" id="tomorrowNote">...</div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="credits">
+            <span><i class="fa-solid fa-user-tie"></i> مشرف الإذاعة المدرسية: أ. أحمد الشملي</span>
+            <span><i class="fa-solid fa-laptop-code"></i> إعداد وتنفيذ المنصة: أ. معاذ اليعقوبي</span>
+        </div>
+        <button class="btn-schedule" onclick="openModal()">
+            <i class="fa-regular fa-calendar-days"></i> عرض الجدول المفصل
+        </button>
+    </footer>
+
+    <!-- نافذة الجدول المفصل -->
+    <div class="modal" id="scheduleModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="section-title">الجدول الإذاعي المفصل للعام الدراسي</h2>
+            <div class="table-container">
+                <table id="fullScheduleTable">
+                    <thead>
+                        <tr>
+                            <th>اليوم</th>
+                            <th>التاريخ</th>
+                            <th>الصف / الجهة المقدمة</th>
+                            <th>الملاحظات / الإشراف</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- سيتم تعبئة البيانات برمجياً -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <div class="code-display" id="codeText">
-        for i in range(0, 10, 1):<br>&nbsp;&nbsp;&nbsp;&nbsp;print(i)
-    </div>
+    <script>
+        // قاعدة بيانات الجدول الإذاعي (عينة من الصورة لشهر أكتوبر ونوفمبر وديسمبر)
+        // يمكنك إضافة بقية التواريخ بنفس النمط
+        const scheduleData = [
+            // شهر أكتوبر
+            { date: '2026-10-04', dayAr: 'الأحد', dateAr: '4 أكتوبر 2026', class: 'الخامس (1)', note: 'الإذاعة المدرسية' },
+            { date: '2026-10-05', dayAr: 'الاثنين', dateAr: '5 أكتوبر 2026', class: 'الخامس (2)', note: 'الإذاعة المدرسية' },
+            { date: '2026-10-06', dayAr: 'الثلاثاء', dateAr: '6 أكتوبر 2026', class: 'الخامس (3)', note: 'الإذاعة المدرسية' },
+            { date: '2026-10-07', dayAr: 'الأربعاء', dateAr: '7 أكتوبر 2026', class: 'القرآن الكريم', note: 'أ. وليد الغافري' },
+            { date: '2026-10-08', dayAr: 'الخميس', dateAr: '8 أكتوبر 2026', class: 'الإدارة المدرسية', note: '-' },
+            { date: '2026-10-11', dayAr: 'الأحد', dateAr: '11 أكتوبر 2026', class: 'الخامس (4)', note: 'الإذاعة المدرسية' },
+            { date: '2026-10-12', dayAr: 'الاثنين', dateAr: '12 أكتوبر 2026', class: 'الخامس (5)', note: 'الإذاعة المدرسية' },
+            { date: '2026-10-13', dayAr: 'الثلاثاء', dateAr: '13 أكتوبر 2026', class: 'السادس (1)', note: 'الإذاعة المدرسية' },
+            { date: '2026-10-14', dayAr: 'الأربعاء', dateAr: '14 أكتوبر 2026', class: 'القرآن الكريم', note: 'أ. وليد الغافري' },
+            { date: '2026-10-15', dayAr: 'الخميس', dateAr: '15 أكتوبر 2026', class: 'الإدارة المدرسية', note: '-' },
+            { date: '2026-10-18', dayAr: 'الأحد', dateAr: '18 أكتوبر 2026', class: 'السادس (2)', note: 'الإذاعة المدرسية' },
+            { date: '2026-10-19', dayAr: 'الاثنين', dateAr: '19 أكتوبر 2026', class: 'السادس (3)', note: 'الإذاعة المدرسية' },
+            { date: '2026-10-20', dayAr: 'الثلاثاء', dateAr: '20 أكتوبر 2026', class: 'السادس (4)', note: 'الإذاعة المدرسية' },
+            { date: '2026-10-21', dayAr: 'الأربعاء', dateAr: '21 أكتوبر 2026', class: 'القرآن الكريم', note: 'أ. وليد الغافري' },
+            { date: '2026-10-22', dayAr: 'الخميس', dateAr: '22 أكتوبر 2026', class: 'الإدارة المدرسية', note: '-' },
+            // شهر نوفمبر (عينة)
+            { date: '2026-11-01', dayAr: 'الأحد', dateAr: '1 نوفمبر 2026', class: 'السابع (3)', note: 'الإذاعة المدرسية' },
+            { date: '2026-11-02', dayAr: 'الاثنين', dateAr: '2 نوفمبر 2026', class: 'السابع (4)', note: 'الإذاعة المدرسية' },
+            { date: '2026-11-03', dayAr: 'الثلاثاء', dateAr: '3 نوفمبر 2026', class: 'السابع (5)', note: 'الإذاعة المدرسية' },
+            { date: '2026-11-04', dayAr: 'الأربعاء', dateAr: '4 نوفمبر 2026', class: 'القرآن الكريم', note: 'أ. وليد الغافري' },
+            { date: '2026-11-05', dayAr: 'الخميس', dateAr: '5 نوفمبر 2026', class: 'الإدارة المدرسية', note: '-' }
+        ];
 
-    <button onclick="visualizeRange()">شغّل الكود (Run)</button>
-
-    <div class="number-line" id="numberLine">
-        </div>
-
-    <div class="result-panel">
-        <strong>المخرجات (Output): </strong> <span id="outputResult">...</span>
-    </div>
-</div>
-
-<script>
-    // إنشاء خط الأعداد المبدئي
-    function initNumberLine() {
-        const container = document.getElementById('numberLine');
-        container.innerHTML = '';
-        for(let i = 0; i <= 20; i++) {
-            let div = document.createElement('div');
-            div.className = 'number-box';
-            div.id = 'box-' + i;
-            div.innerText = i;
-            container.appendChild(div);
+        // تحديث الساعة المباشرة
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour12: false });
+            document.getElementById('liveClock').textContent = timeString;
         }
-    }
+        setInterval(updateClock, 1000);
+        updateClock();
 
-    async function visualizeRange() {
-        const start = parseInt(document.getElementById('startVal').value);
-        const end = parseInt(document.getElementById('endVal').value);
-        const step = parseInt(document.getElementById('stepVal').value);
-        
-        // تحديث شكل الكود
-        let codeStr = `for i in range(${start}, ${end}`;
-        if(step !== 1) codeStr += `, ${step}`;
-        codeStr += `):<br>&nbsp;&nbsp;&nbsp;&nbsp;print(i)`;
-        document.getElementById('codeText').innerHTML = codeStr;
+        // دالة لمعرفة إذاعة اليوم وإذاعة الغد بناءً على تاريخ الجهاز
+        function displayTodayTomorrow() {
+            // استخدام تاريخ اليوم الفعلي 
+            const today = new Date();
+            // لغرض التجربة والعرض التوضيحي، إذا كان تاريخ اليوم قبل بدء الجدول، سنجبره على عرض أقرب يوم (4 أكتوبر)
+            // لحذف التجربة، اجعل الشرط يقرأ تاريخ اليوم مباشرة.
+            
+            today.setHours(0,0,0,0); // تصفير الوقت
 
-        // إعادة تعيين الألوان والمخرجات
-        const boxes = document.querySelectorAll('.number-box');
-        boxes.forEach(box => box.classList.remove('active'));
-        document.getElementById('outputResult').innerText = '';
+            let todayIndex = -1;
+            let tomorrowIndex = -1;
 
-        if(step === 0) {
-            alert("لا يمكن أن تكون القفزة صفراً!");
-            return;
-        }
-
-        let outputArray = [];
-        
-        // المنطق الرياضي لمحاكاة البايثون
-        if (step > 0) {
-            for(let i = start; i < end; i += step) {
-                if(i >= 0 && i <= 20) {
-                    await highlightBox(i);
+            // البحث عن اليوم في الجدول
+            for (let i = 0; i < scheduleData.length; i++) {
+                let entryDate = new Date(scheduleData[i].date);
+                if (entryDate.getTime() === today.getTime()) {
+                    todayIndex = i;
+                    break;
+                } else if (entryDate.getTime() > today.getTime() && todayIndex === -1) {
+                    // إذا لم نجد إذاعة لليوم (مثلا إجازة)، نجلب أول إذاعة قادمة
+                    todayIndex = i;
+                    break;
                 }
-                outputArray.push(i);
-                document.getElementById('outputResult').innerText = outputArray.join(' ، ');
             }
-        } else {
-             for(let i = start; i > end; i += step) {
-                if(i >= 0 && i <= 20) {
-                    await highlightBox(i);
-                }
-                outputArray.push(i);
-                document.getElementById('outputResult').innerText = outputArray.join(' ، ');
+
+            // إذا انتهى الجدول
+            if(todayIndex === -1 && scheduleData.length > 0) {
+                todayIndex = scheduleData.length - 1; 
+            }
+
+            // الغد هو الإدخال الذي يليه في المصفوفة (حتى لا نعرض أيام الإجازات)
+            if(todayIndex !== -1 && todayIndex + 1 < scheduleData.length) {
+                tomorrowIndex = todayIndex + 1;
+            }
+
+            // عرض البيانات في الشاشة
+            if(todayIndex !== -1) {
+                let tData = scheduleData[todayIndex];
+                document.getElementById('todayDate').textContent = `${tData.dayAr}، ${tData.dateAr}`;
+                document.getElementById('todayClass').textContent = tData.class;
+                document.getElementById('todayNote').textContent = tData.note !== '-' ? tData.note : 'إشراف مباشر';
+            }
+
+            if(tomorrowIndex !== -1) {
+                let tmData = scheduleData[tomorrowIndex];
+                document.getElementById('tomorrowDate').textContent = `${tmData.dayAr}، ${tmData.dateAr}`;
+                document.getElementById('tomorrowClass').textContent = tmData.class;
+                document.getElementById('tomorrowNote').textContent = tmData.note !== '-' ? tmData.note : 'إشراف مباشر';
+            } else {
+                document.getElementById('tomorrowDate').textContent = '---';
+                document.getElementById('tomorrowClass').textContent = 'لا يوجد إذاعة مجدولة';
+                document.getElementById('tomorrowNote').textContent = '';
             }
         }
-    }
 
-    function highlightBox(index) {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                const box = document.getElementById('box-' + index);
-                if(box) box.classList.add('active');
-                resolve();
-            }, 600); // سرعة القفز (600 ملي ثانية)
-        });
-    }
+        // تعبئة الجدول المفصل
+        function populateTable() {
+            const tbody = document.querySelector('#fullScheduleTable tbody');
+            tbody.innerHTML = '';
+            scheduleData.forEach(item => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${item.dayAr}</strong></td>
+                    <td>${item.dateAr}</td>
+                    <td style="color: var(--primary-gold); font-weight:bold; font-size:1.4rem;">${item.class}</td>
+                    <td>${item.note}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
 
-    // تهيئة عند فتح الصفحة
-    initNumberLine();
-</script>
+        // التحكم في النافذة المنبثقة (Modal)
+        function openModal() {
+            document.getElementById('scheduleModal').style.display = 'flex';
+        }
 
+        function closeModal() {
+            document.getElementById('scheduleModal').style.display = 'none';
+        }
+
+        // استدعاء الدوال عند بدء التشغيل
+        window.onload = () => {
+            displayTodayTomorrow();
+            populateTable();
+        };
+
+    </script>
 </body>
 </html>
