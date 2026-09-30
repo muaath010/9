@@ -29,6 +29,10 @@
             font-family: 'Cairo', sans-serif;
         }
 
+        html {
+    font-size: 12px; /* هذا سيصغر الحجم العام ليتناسب مع الشاشات العادية */
+}
+
         body {
             background: var(--bg-light);
             color: var(--text-dark);
@@ -51,7 +55,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.2rem 3rem;
+            padding: 0.8rem 1.5rem;
             background: linear-gradient(90deg, rgba(139,21,28,1) 0%, rgba(80,10,15,1) 100%);
             border-bottom: 4px solid var(--primary-gold);
             box-shadow: 0 5px 20px rgba(0,0,0,0.15);
@@ -104,8 +108,8 @@
             flex: 1;
             display: grid;
             grid-template-columns: 1fr 2fr;
-            gap: 1.5rem;
-            padding: 1.5rem 3rem;
+            gap: 1rem; 
+            padding: 1rem 1.5rem;
             min-height: 0; /* هام جداً للحفاظ على الأبعاد داخل الفليكس */
         }
 
@@ -251,10 +255,10 @@
     margin-left: auto;
     margin-right: auto;
     width: fit-content; /* هذه الإضافة تضمن توسيط العنصر بدقة في المنتصف */
-    padding: 0.5rem 2.5rem;
+    padding: 0.4rem 1.5rem;
     border-radius: 15px;
     font-weight: 900; /* لجعل الخط عريضاً وبارزاً جداً */
-    font-size: 1.7rem; /* تكبير حجم الخط قليلاً لزيادة البروز */
+    font-size: 1.3rem; /* تكبير حجم الخط قليلاً لزيادة البروز */
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     text-align: center;
 }
