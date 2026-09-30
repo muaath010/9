@@ -243,16 +243,21 @@
             color: var(--bg-dark);
         }
 
-        .card-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            padding: 0.4rem 1.2rem;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 1.3rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
+       .card-badge {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content; /* هذه الإضافة تضمن توسيط العنصر بدقة في المنتصف */
+    padding: 0.5rem 2.5rem;
+    border-radius: 15px;
+    font-weight: 900; /* لجعل الخط عريضاً وبارزاً جداً */
+    font-size: 1.7rem; /* تكبير حجم الخط قليلاً لزيادة البروز */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    text-align: center;
+}
 
         .today-card .card-badge { background: var(--primary-gold); color: var(--primary-red); }
         .tomorrow-card .card-badge { background: var(--primary-red); color: #fff; }
