@@ -467,25 +467,33 @@
             font-size: 1.3rem;
         }
 /* تنسيق الباركود */
+/* تنسيق الباركود المحدث (حجم كبير وواضح) */
 .qr-section { 
     display: flex; 
+    flex-direction: column; /* ترتيب النص فوق الصورة */
     align-items: center; 
     gap: 15px; 
+    padding: 1.5rem;
+    text-align: center;
 }
 .qr-section p { 
     font-weight: 800; 
-    font-size: 1.1rem; 
+    font-size: 1.4rem; /* تكبير خط النص */
     color: var(--primary-red); 
-    text-align: left; 
     line-height: 1.4; 
 }
+.qr-section p i {
+    color: var(--primary-gold);
+    margin-left: 8px;
+}
 .qr-section img { 
-    width: 60px; 
-    height: 60px; 
-    border: 2px solid var(--primary-gold); 
-    border-radius: 10px; 
-    padding: 2px; 
+    width: 180px;  /* تكبير حجم الباركود بشكل كبير جداً */
+    height: 180px; 
+    border: 3px solid var(--primary-gold); 
+    border-radius: 15px; 
+    padding: 5px; 
     background: #fff; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
         
     </style>
@@ -535,6 +543,11 @@
                 </h3>
                 <p id="morningQuote" class="quote-text">جاري تحميل حكمة اليوم...</p>
             </div>
+            <!-- قسم الباركود الجديد في العمود الجانبي -->
+<div class="qr-section glass-panel">
+    <p><i class="fa-solid fa-qrcode"></i> امسح الكود بهاتفك<br>لعرض صورة الجدول</p>
+    <img id="qrCode" src="" alt="QR Code">
+</div>
         </div>
 
         <!-- العمود الأيسر (العداد + العرض) -->
@@ -594,10 +607,7 @@
         </div>
 
         <!-- الباركود الذي سيعرض الصورة -->
-<div class="qr-section">
-    <p>امسح الكود<br>لعرض صورة الجدول</p>
-    <img id="qrCode" src="" alt="QR Code">
-</div>
+
         
     </footer>
 
@@ -849,8 +859,7 @@ function setupQRCode() {
     }
 
     // توليد الباركود عبر API مجاني وربطه بعنصر الصورة
-    document.getElementById('qrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=10&data=${encodeURIComponent(fullImageUrl)}`;
-}
+document.getElementById('qrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&margin=10&data=${encodeURIComponent(fullImageUrl)}`;}
     </script>
 </body>
 </html>
