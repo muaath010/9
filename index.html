@@ -216,15 +216,16 @@
         }
 
         /* قسم العرض (اليوم وغداً) */
+       /* قسم العرض (اليوم وغداً) */
         .display-section {
             display: flex;
             gap: 1.5rem;
-            flex: 1;
+            /* تم حذف flex: 1; من هنا لمنع البطاقات من التمدد العشوائي لملء الشاشة */
         }
 
         .card {
-            flex: 1;
-            padding: 1.5rem;
+            flex: 1; /* لإبقاء العرض متساوي للبطاقتين */
+            padding: 1rem; /* تقليل الحشو الداخلي لتصغير حجم الصندوق */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -232,6 +233,7 @@
             overflow: hidden;
             border-radius: 25px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            min-height: 280px; /* وضعنا ارتفاع ثابت ومناسب لضمان عدم كبر الصندوق */
         }
 
         .today-card {
@@ -265,14 +267,14 @@
         .today-card .card-badge { background: var(--primary-gold); color: var(--primary-red); }
         .tomorrow-card .card-badge { background: var(--primary-red); color: #fff; }
 
-        .card-content {
+       .card-content {
             text-align: center;
-            margin-top: 1.5rem;
+            margin-top: 2.5rem; /* إزاحة المحتوى للأسفل قليلاً لعدم التداخل مع شارة (إذاعة اليوم) */
         }
 
         .card-content .date {
-            font-size: 1.6rem;
-            font-weight: 700;
+            font-size: 2.2rem; /* تكبير التاريخ */
+            font-weight: 800; /* زيادة سماكة الخط */
             margin-bottom: 0.5rem;
         }
 
@@ -280,20 +282,21 @@
         .tomorrow-card .date { color: #fff; }
 
         .card-content .class-name {
-            font-size: 3.5rem;
+            font-size: 5.5rem; /* تكبير اسم الصف بشكل ضخم ليملأ البطاقة */
             font-weight: 900;
             text-shadow: 0 4px 10px rgba(0,0,0,0.2);
             margin-bottom: 0.5rem;
+            line-height: 1.1; /* تقليل المسافة بين الأسطر إن وجدت */
         }
 
         .today-card .class-name { color: #fff; }
         .tomorrow-card .class-name { color: var(--primary-red); }
 
         .card-content .supervisor {
-            font-size: 1.6rem;
-            font-weight: 800;
+            font-size: 2rem; /* تكبير اسم المشرف أو الملاحظة */
+            font-weight: 900;
             display: inline-block;
-            padding: 0.4rem 2rem;
+            padding: 0.5rem 2.5rem;
             border-radius: 50px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
