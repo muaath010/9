@@ -461,6 +461,28 @@
             font-weight: 800;
             font-size: 1.3rem;
         }
+/* تنسيق الباركود */
+.qr-section { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+}
+.qr-section p { 
+    font-weight: 800; 
+    font-size: 1.1rem; 
+    color: var(--primary-red); 
+    text-align: left; 
+    line-height: 1.4; 
+}
+.qr-section img { 
+    width: 60px; 
+    height: 60px; 
+    border: 2px solid var(--primary-gold); 
+    border-radius: 10px; 
+    padding: 2px; 
+    background: #fff; 
+}
+        
     </style>
 </head>
 <body>
@@ -566,6 +588,13 @@
                 <i class="fa-regular fa-calendar-days"></i> عرض الجدول المفصل
             </button>
         </div>
+
+        <!-- الباركود الذي سيعرض الصورة -->
+<div class="qr-section">
+    <p>امسح الكود<br>لعرض صورة الجدول</p>
+    <img id="qrCode" src="" alt="QR Code">
+</div>
+        
     </footer>
 
     <!-- نافذة الجدول المفصل -->
@@ -792,6 +821,7 @@
 
         // تشغيل الدوال عند بداية التحميل
         window.onload = () => {
+            setupQRCode();
             updateClock();
             updateCountdown();
             setMorningQuote();
@@ -799,6 +829,24 @@
             displayTodayTomorrow();
             populateTable();
         };
+        // دالة إعداد الباركود ليعرض الصورة المرفقة مباشرة
+function setupQRCode() {
+    // استخراج الرابط المباشر للموقع وحذف أي نهايات مثل index.html
+    let baseUrl = window.location.origin + window.location.pathname;
+    baseUrl = baseUrl.substring(0, baseUrl.lastIndexOf('/')) + '/';
+    
+    // إضافة اسم ملف الصورة (يجب رفعه على جيت هب بنفس الاسم)
+    let imageFileName = "IMG-20260930-WA0000.jpg";
+    let fullImageUrl = baseUrl + imageFileName;
+
+    // رابط احتياطي في حال فتح الملف من الكمبيوتر مباشرة بدون سيرفر
+    if (window.location.protocol === 'file:') {
+        fullImageUrl = 'https://example.com/IMG-20260930-WA0000.jpg'; 
+    }
+
+    // توليد الباركود عبر API مجاني وربطه بعنصر الصورة
+    document.getElementById('qrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=10&data=${encodeURIComponent(fullImageUrl)}`;
+}
     </script>
 </body>
 </html>
