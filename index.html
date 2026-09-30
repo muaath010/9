@@ -236,21 +236,24 @@
 }
 
         /* قسم إشراقة الصباح */
-        .quote-section {
-            padding: 1.5rem;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(243,229,171,0.3) 100%);
-            border: 2px solid var(--primary-gold);
-            flex-shrink: 0;
-        }
-        
-        .quote-text {
-            font-size: 1.4rem;
-            color: var(--primary-red);
-            font-weight: 800;
-            line-height: 1.6;
-            margin-top: 0.5rem;
-        }
+        /* قسم إشراقة الصباح المحدث (تحت البطاقات) */
+.quote-section {
+    padding: 1.2rem 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(243,229,171,0.3) 100%);
+    border: 2px solid var(--primary-gold);
+    flex-shrink: 0;
+    margin-top: 0.5rem; /* مسافة خفيفة بينها وبين البطاقات التي فوقها */
+}
+
+.quote-text {
+    font-size: 2rem; /* تكبير خط الحكمة بشكل ملحوظ */
+    color: var(--primary-red);
+    font-weight: 900; /* جعل الخط عريضاً وبارزاً */
+    line-height: 1.6;
+    margin-top: 0.5rem;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.05); /* إضافة ظل خفيف جداً لزيادة الوضوح */
+}
 
         /* العداد التنازلي */
         .countdown-panel {
@@ -623,12 +626,7 @@
             </div>
 
             <!-- إشراقة الصباح -->
-            <div class="quote-section glass-panel">
-                <h3 style="color: var(--primary-gold); font-size: 1.2rem; font-weight: 800;">
-                    <i class="fa-solid fa-sun"></i> إشراقة الصباح
-                </h3>
-                <p id="morningQuote" class="quote-text">جاري تحميل حكمة اليوم...</p>
-            </div>
+           
             <!-- قسم الباركود الجديد في العمود الجانبي -->
 
         </div>
@@ -666,6 +664,12 @@
                         <div class="supervisor" id="tomorrowNote">...</div>
                     </div>
                 </div>
+            </div>
+             <div class="quote-section glass-panel">
+                <h3 style="color: var(--primary-gold); font-size: 1.2rem; font-weight: 800;">
+                    <i class="fa-solid fa-sun"></i> إشراقة الصباح
+                </h3>
+                <p id="morningQuote" class="quote-text">جاري تحميل حكمة اليوم...</p>
             </div>
             <div class="qr-section glass-panel">
     <p><i class="fa-solid fa-qrcode"></i> <br>لعرض صورة الجدول</p>
